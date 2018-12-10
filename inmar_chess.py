@@ -12,7 +12,7 @@ def rook_movement(position):
 
     probable_moves.extend([files+str(i) for i in range(1, 9) if i != rank])
     probable_moves.extend([i + str(rank) for i in chess_files if i != files])
-    print probable_moves
+    return probable_moves
 
 
 def knight_movement(position):
@@ -51,7 +51,7 @@ def knight_movement(position):
             if rank-1 > 0:
                 probable_moves.append(aft_files + str(rank - 1))
 
-    print probable_moves
+    return probable_moves
 
 
 def queen_movement(position):
@@ -64,7 +64,7 @@ def queen_movement(position):
 
 	for i in range(1,8):
 		if chr(ord(files)+i) in chess_files and rank+i <= 8:
-			probable_moves.append(chr(ord(files))+i+str(rank+i))
+			probable_moves.append(chr(ord(files)+i)+str(rank+i))
 		elif chr(ord(files)-i) in chess_files and rank-i > 0:
 			probable_moves.append(chr(ord(files)+i) + str(rank+i))
 		elif chr(ord(files)+i) in chess_files and rank - i > 0:
@@ -72,7 +72,7 @@ def queen_movement(position):
 		elif chr(ord(files)-i) in chess_files and rank + i <=8:
 			probable_moves.append(chr(ord(files)-i)+ str(rank + i))
 
-        print probable_moves
+        return probable_moves
 
 
 def main(argv):
@@ -91,14 +91,15 @@ def main(argv):
 
                 chess_piece = str(args.piece)
                 current_position = str(args.position)
+		probable_moves=[]
 
                 if chess_piece.lower() == 'rook':
-                	rook_movement(current_position)
+                	probable_moves = rook_movement(current_position)
                 elif chess_piece.lower() == 'knight':
-                	knight_movement(current_position)
+                	probable_moves = knight_movement(current_position)
 		elif chess_piece.lower() == 'queen':
-			queen_movement(current_position)
-
+			probable_moves = queen_movement(current_position)
+		print probable_moves
         except Exception as ex:
             print "ERROR:%s" % ex.message
 
